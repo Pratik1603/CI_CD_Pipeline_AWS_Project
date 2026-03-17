@@ -6,51 +6,78 @@ const API_URL = import.meta.env.VITE_API_URL || '/api';
 function App() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchMessages = async () => {
-    const res = await fetch(`${API_URL}/messages`);
-    const data = await res.json();
-    setMessages(data);
+    try {
+      const res = await fetch(`${API_URL}/messages`);
+      const data = await res.json();
+      setMessages(data);
+    } catch (err) {
+      console.error('Failed to fetch:', err);
+    }
   };
 
-  useEffect(() => { fetchMessages(); }, []);
+  useEffect(() => {
+    fetchMessages();
+  }, []);
 
   const addMessage = async (e) => {
     e.preventDefault();
-    if (!newMessage.trim()) return;
-    await fetch(`${API_URL}/messages`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content: newMessage }),
-    });
-    setNewMessage('');
-    fetchMessages();
+    if (!newMessage.trim() || isLoading) return;
+    
+    setIsLoading(true);
+    try {
+      await fetch(`${API_URL}/messages`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: newMessage }),
+      });
+      setNewMessage('');
+      await fetchMessages();
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const deleteMessage = async (id) => {
-    await fetch(`${API_URL}/messages/${id}`, { method: 'DELETE' });
-    fetchMessages();
+    try {
+      await fetch(`${API_URL}/messages/${id}`, { method: 'DELETE' });
+      fetchMessages();
+    } catch (err) {
+      console.error('Failed to delete:', err);
+    }
   };
 
   return (
-    <div className="app">
-      <h1>Two-Tier Web App</h1>
-      <form onSubmit={addMessage}>
+    <div className="app-container">
+      <h1>Two-Tier App</h1>
+      
+      <form className="message-form" onSubmit={addMessage}>
         <input
+          className="message-input"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Enter a message..."
+          placeholder="Write something..."
+          disabled={isLoading}
         />
-        <button type="submit">Add</button>
+        <button className="add-btn" type="submit" disabled={isLoading}>
+          {isLoading ? <div className="loading-spinner"></div> : 'Add'}
+        </button>
       </form>
-      <ul>
-        {messages.map((msg) => (
-          <li key={msg.id}>
-            {msg.content}
-            <button onClick={() => deleteMessage(msg.id)}>✕</button>
-          </li>
-        ))}
-      </ul>
+
+      <div className="message-list">
+        {messages.length === 0 ? (
+          <div className="empty-state">No messages yet. Start the conversation!</div>
+        ) : (
+          messages.map((msg) => (
+            <div className="message-item" key={msg.id}>
+              <span className="message-content">{msg.content}</span>
+              <button className="delete-btn" onClick={() => deleteMessage(msg.id)}>✕</button>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }
