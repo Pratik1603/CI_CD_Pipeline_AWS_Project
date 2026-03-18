@@ -51,7 +51,16 @@ function App() {
 
   return (
     <div className="app-container">
-      <h1>Two-Tier App</h1>
+      <header className="app-header">
+        <div className="header-top">
+          <h1>Nexus Messages</h1>
+          <div className="status-badge">
+            <span className="status-dot"></span>
+            Online
+          </div>
+        </div>
+        <p className="subtitle">Secure Two-Tier Synchronization</p>
+      </header>
       
       <form className="message-form" onSubmit={addMessage}>
         <input
