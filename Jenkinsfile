@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     triggers {
-        cron('H H * * *') // Run daily at a randomized time
+        cron('H H * * *')
         pollSCM('H/5 * * * *') 
     }
 

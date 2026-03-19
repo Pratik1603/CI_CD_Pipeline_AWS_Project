@@ -13,7 +13,6 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// Message represents a single message in the database
 type Message struct {
 	ID        int       `json:"id"`
 	Content   string    `json:"content"`
@@ -22,7 +21,6 @@ type Message struct {
 
 var db *sql.DB
 
-// ===================== DATABASE =====================
 
 func connectDB() {
 	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
@@ -57,7 +55,6 @@ func initDB() {
 	log.Println("Database initialized")
 }
 
-// ===================== MIDDLEWARE =====================
 
 func enableCORS(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -73,7 +70,6 @@ func enableCORS(next http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
-// ===================== HANDLERS =====================
 
 func messagesHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
@@ -141,7 +137,6 @@ func messagesHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// ===================== MAIN =====================
 
 func main() {
 	connectDB()
