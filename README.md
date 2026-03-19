@@ -35,7 +35,7 @@ graph TD
 
 ### Frontend
 - **Framework**: React 18 (Vite)
-- **Styling**: Vanilla CSS with Glassmorphism & Cyberpunk aesthetics
+- **Styling**: Vanilla CSS
 - **Deployment**: Nginx (Dockerized)
 
 ### Backend
@@ -122,25 +122,33 @@ sudo systemctl restart jenkins
 
 ---
 
-## ☁️ Advanced Optimization
-To ensure smooth operation on a `t2.micro` (1GB RAM):
-- **Swap Space**: Creating a 2GB Swap file is highly recommended to prevent out-of-memory errors during Docker builds.
-  ```bash
-  sudo fallocate -l 2G /swapfile
-  sudo chmod 600 /swapfile
-  sudo mkswap /swapfile
-  sudo swapon /swapfile
-  ```
 
-
-## 📈 CI/CD Pipeline
-The project uses a `Jenkinsfile` to automate the entire lifecycle:
-1.  **Clone**: Pulls the latest code from GitHub on every push.
-2.  **Build**: Rebuilds Docker images using `--no-cache` for clean state.
-3.  **Deploy**: Performs a zero-downtime restart of containers.
-4.  **Integration Tests**: Automatically verifies API health and frontend accessibility before completing the deployment.
 
 ---
+
+## 📊 Pipeline Execution Details
+
+### Pipeline Stage View
+This project utilizes a multi-stage Jenkins pipeline to automate the lifecycle of the application.
+![Jenkins Pipeline Stage View](frontend/public/pipeline_view.png)
+
+### Deployment History
+A stable build history ensures reliability and allows for quick rollbacks if necessary.
+![Jenkins Build History](frontend/public/Build_Runs.png)
+
+### Build Metadata & Revisions
+Each build tracks the specific Git commit and changes, providing full traceability.
+![Jenkins Build Run Details](frontend/public/Build_Run.png)
+
+---
+
+## ☁️ AWS Infrastructure Status
+
+The application is hosted on a `t2.micro` instance, optimized for the AWS Free Tier with custom EBS and Swap configurations.
+![AWS EC2 Console](frontend/public/AWS_ec2.png)
+
+---
+
 
 
 
