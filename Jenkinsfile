@@ -3,7 +3,7 @@ pipeline {
     
     triggers {
         cron('H H * * *') // Run daily at a randomized time
-        pollSCM('H/5 * * * *') // Check GitHub for changes every 5 minutes
+        pollSCM('H/5 * * * *') 
     }
 
     environment {
