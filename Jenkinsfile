@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    
+    triggers {
+        cron('H H * * *') // Run daily at a randomized time
+    }
 
     environment {
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
@@ -7,6 +11,9 @@ pipeline {
 
     stages {
         stage('Clone Repository') {
+            when {
+                not { triggeredBy 'TimerTrigger' }
+            }
             steps {
                 echo 'Pulling latest code from GitHub...'
                 checkout scm
@@ -14,6 +21,9 @@ pipeline {
         }
 
         stage('Build Docker Images') {
+            when {
+                not { triggeredBy 'TimerTrigger' }
+            }
             steps {
                 echo 'Building Docker images...'
                 sh 'docker compose build --no-cache'
@@ -21,6 +31,9 @@ pipeline {
         }
 
         stage('Stop Old Containers') {
+            when {
+                not { triggeredBy 'TimerTrigger' }
+            }
             steps {
                 echo 'Stopping old containers...'
                 sh 'docker compose down || true'
@@ -28,6 +41,9 @@ pipeline {
         }
 
         stage('Start Containers') {
+            when {
+                not { triggeredBy 'TimerTrigger' }
+            }
             steps {
                 echo 'Starting containers with Docker Compose...'
                 sh 'docker compose up -d'
@@ -35,6 +51,9 @@ pipeline {
         }
 
         stage('Wait for Services') {
+            when {
+                not { triggeredBy 'TimerTrigger' }
+            }
             steps {
                 echo 'Waiting for services to be ready...'
                 sh '''
@@ -52,6 +71,9 @@ pipeline {
         }
 
         stage('Run Integration Tests') {
+            when {
+                not { triggeredBy 'TimerTrigger' }
+            }
             steps {
                 echo 'Running integration tests...'
                 sh '''
@@ -80,6 +102,10 @@ pipeline {
     }
 
     post {
+        always {
+            echo 'Performing Docker cleanup...'
+            sh 'docker system prune -f --volumes || true'
+        }
         failure {
             echo 'Pipeline failed! Check the logs above.'
             sh 'docker compose logs'

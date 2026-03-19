@@ -12,8 +12,15 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .app-header {
@@ -56,6 +63,34 @@
   animation: pulse 2s infinite;
 }
 
+.build-badge {
+  display: flex;
+  background: #1e293b;
+  border: 1px solid var(--border-glass);
+  border-radius: 6px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 700;
+  height: 24px;
+}
+
+.build-label {
+  background: #475569;
+  color: #f8fafc;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+}
+
+.build-status {
+  background: #22c55e;
+  color: #fff;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+}
+
 .subtitle {
   color: var(--text-muted);
   font-size: 0.95rem;
@@ -65,9 +100,20 @@
 }
 
 @keyframes pulse {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
 }
 
 .message-form {
@@ -138,8 +184,15 @@
 }
 
 @keyframes slideIn {
-  from { opacity: 0; transform: translateX(-10px); }
-  to { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .message-content {
@@ -185,5 +238,124 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* System Info Section */
+.system-info-section {
+  margin-top: 50px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border-glass);
+}
+
+.info-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.info-header h2 {
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+  background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.info-header p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.tech-stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.tech-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  padding: 15px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.tech-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--primary);
+}
+
+.tech-icon {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.tech-card h3 {
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.tech-card p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.infrastructure-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.infra-card {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(217, 70, 239, 0.05) 100%);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.infra-card h3 {
+  margin-bottom: 15px;
+  color: var(--secondary);
+}
+
+.infra-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.infra-card li {
+  color: var(--text-main);
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.infra-card li::before {
+  content: '✓';
+  color: #4ade80;
+  font-weight: bold;
+}
+
+.infra-illustration img {
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-glass);
+}
+
+@media (max-width: 500px) {
+  .infrastructure-details {
+    grid-template-columns: 1fr;
+  }
 }

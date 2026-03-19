@@ -25,7 +25,7 @@ function App() {
   const addMessage = async (e) => {
     e.preventDefault();
     if (!newMessage.trim() || isLoading) return;
-    
+
     setIsLoading(true);
     try {
       await fetch(`${API_URL}/messages`, {
@@ -58,10 +58,14 @@ function App() {
             <span className="status-dot"></span>
             Online
           </div>
+          <div className="build-badge">
+            <span className="build-label">Build</span>
+            <span className="build-status">Passing</span>
+          </div>
         </div>
-        <p className="subtitle">Secure Two-Tier Synchronization</p>
+        <p className="subtitle">Full-Stack Automated Messaging</p>
       </header>
-      
+
       <form className="message-form" onSubmit={addMessage}>
         <input
           className="message-input"
@@ -86,6 +90,51 @@ function App() {
             </div>
           ))
         )}
+      </div>
+
+      <div className="system-info-section">
+        <div className="info-header">
+          <h2>Project Overview</h2>
+          <p>Full-Stack CI/CD Deployment</p>
+        </div>
+
+        <div className="tech-stack-grid">
+          <div className="tech-card">
+            <div className="tech-icon">🚀</div>
+            <h3>Frontend</h3>
+            <p>React + Vite</p>
+          </div>
+          <div className="tech-card">
+            <div className="tech-icon">⚙️</div>
+            <h3>Backend</h3>
+            <p>Go (Golang)</p>
+          </div>
+          <div className="tech-card">
+            <div className="tech-icon">💾</div>
+            <h3>Database</h3>
+            <p>PostgreSQL</p>
+          </div>
+          <div className="tech-card">
+            <div className="tech-icon">☁️</div>
+            <h3>Cloud</h3>
+            <p>AWS EC2</p>
+          </div>
+        </div>
+
+        <div className="infrastructure-details">
+          <div className="infra-card">
+            <h3>CI/CD Pipeline</h3>
+            <ul>
+              <li>Jenkins Automated Builds</li>
+              <li>Docker Containerization</li>
+              <li>EBS Volume Optimization (30GB)</li>
+              <li>Zero-Downtime Deployment</li>
+            </ul>
+          </div>
+          <div className="infra-illustration">
+            <img src="/tech-stack.png" alt="Architecture Illustration" />
+          </div>
+        </div>
       </div>
     </div>
   );
