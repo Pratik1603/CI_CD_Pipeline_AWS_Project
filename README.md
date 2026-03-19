@@ -13,13 +13,13 @@ The system is built on a modular microservices-inspired architecture, optimized 
 
 ```mermaid
 graph TD
-    User((User)) -->|HTTPS| Frontend[React Frontend - Nginx]
-    Frontend -->|API Requests| Backend[Go Backend API]
-    Backend -->|SQL| DB[(PostgreSQL Database)]
+    User[User] -->|HTTPS| Frontend["React Frontend (Nginx)"]
+    Frontend -->|API| Backend["Go Backend API"]
+    Backend -->|SQL| DB["PostgreSQL Database"]
     
-    subgraph CI/CD Pipeline
-        GitHub[GitHub Repo] -->|Webhook| Jenkins[Jenkins CI/CD]
-        Jenkins -->|Build & Test| Docker[Docker Compose]
+    subgraph Pipeline ["CI/CD Pipeline"]
+        GitHub[GitHub Repository] -->|Push| Jenkins[Jenkins Server]
+        Jenkins -->|Build| Docker[Docker Compose]
         Docker -->|Deploy| EC2[AWS EC2 Instance]
     end
 ```
